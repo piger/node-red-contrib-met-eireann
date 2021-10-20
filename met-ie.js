@@ -11,9 +11,10 @@ module.exports = function(RED) {
         var node = this;
 
         node.on('input', function(msg, send, done) {
-            const now = DateTime.now().startOf("second");
+            const now = DateTime.now().startOf('hour');
             const dt = now.toISO({ suppressMilliseconds: true, suppressSeconds: true, includeOffset: false });
-            const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat={node.lat};long={node.long};from={dt};to={dt}`;
+            const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat=${node.lat};long=${node.long};from=${dt};to=${dt}`;
+            this.log(`url: ${url}`);
             let err;
 
             http.get(url, (res) => {
@@ -35,8 +36,8 @@ module.exports = function(RED) {
                         xml2js.parseString(rawData, function(err, result) {
                             let current = result.weatherdata.product[0].time[0].location[0];
                             let rainCurrent = result.weatherdata.product[0].time[1].location[0];
-                            let r = {};
-                            r.payload = {
+
+                            msg.payload = {
                                 temperature: current.temperature[0].$.value,
                                 windDirection: current.windDirection[0].$.name,
                                 windDirectionDeg: current.windDirection[0].$.deg,
@@ -56,7 +57,7 @@ module.exports = function(RED) {
                         done(e);
                     }
 
-                    send(r);
+                    send(msg);
                 });
             }).on("error", (e) => {
                 console.error(`Got error: ${e.message}`);
