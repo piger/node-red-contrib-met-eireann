@@ -1,8 +1,8 @@
-const http = require("http");
-const xml2js = require("xml2js");
-const { DateTime } = require("luxon");
-
 module.exports = function(RED) {
+    const http = require("http");
+    const xml2js = require("xml2js");
+    const { DateTime } = require("luxon");
+
     function MetIe(config) {
         RED.nodes.createNode(this, config);
         this.latitude = config.latitude;
