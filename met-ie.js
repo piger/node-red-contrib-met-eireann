@@ -11,11 +11,11 @@ module.exports = function(RED) {
         var node = this;
 
         node.on('input', function(msg, send, done) {
-            const now = DateTime.now().startOf('hour');
-            const dt = now.toISO({ suppressMilliseconds: true, suppressSeconds: true, includeOffset: false });
-            const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat=${node.lat};long=${node.long};from=${dt};to=${dt}`;
-            this.log(`url: ${url}`);
-            let err;
+            node.status({fill:"blue",shape:"dot",text:"weather.status.requesting"});
+
+            const now = DateTime.now().startOf('hour').toISO({ suppressMilliseconds: true, suppressSeconds: true, includeOffset: false });
+            const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat=${node.lat};long=${node.long};from=${now};to=${now}`;
+            // this.log(`url: ${url}`);
 
             http.get(url, (res) => {
                 const { statusCode } = res;
@@ -64,10 +64,9 @@ module.exports = function(RED) {
                 done(e);
             });
 
-            // msg.payload = "HELLO WORLD";
-            // node.send(msg);
-        });
-    }
+            node.status({});
+        }); // end node('on')
+    } // end MetIe
 
     RED.nodes.registerType("met-ie", MetIe);
 }
