@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Daniel Kertesz <daniel@spatof.org>",
   "license": "ISC",
   "node-red": {
     "nodes": {
@@ -15,7 +15,10 @@
   },
   "devDependencies": {
     "node-red": "^2.0.6",
-    "node-red-node-test-helper": "^0.2.7",
+    "node-red-node-test-helper": "^0.2.7"
+  },
+  "dependencies": {
+    "luxon": "^2.0.2",
     "xml2js": "^0.4.23"
   }
 }

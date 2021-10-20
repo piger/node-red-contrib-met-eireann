@@ -5,7 +5,13 @@
         defaults: {
             name: {
                 value: ""
-            }
+            },
+            latitude: {
+                value: "",
+            },
+            longitude: {
+                value: "",
+            },
         },
         inputs: 1,
         outputs: 1,
@@ -21,6 +27,14 @@
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
+    <div class="form-row">
+        <label for="node-input-lat"><i class="fa fa-tag"></i> Latitude</label>
+        <input type="text" id="node-input-lat" placeholder="0">
+    </div>
+    <div class="form-row">
+        <label for="node-input-long"><i class="fa fa-tag"></i> Longitude</label>
+        <input type="text" id="node-input-long" placeholder="0">
+    </div>        
 </script>
 
 <script type="text/html" data-help-name="met-ie">
