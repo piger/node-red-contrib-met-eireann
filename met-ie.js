@@ -5,15 +5,15 @@ module.exports = function(RED) {
 
     function MetIe(config) {
         RED.nodes.createNode(this, config);
-        this.latitude = config.latitude;
-        this.longitude = config.longitude;
+        this.lat = config.lat;
+        this.long = config.long;
 
         var node = this;
 
         node.on('input', function(msg) {
             const now = DateTime.now().startOf("second");
             const dt = now.toISO({ suppressMilliseconds: true, suppressSeconds: true, includeOffset: false });
-            const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat={this.latitude};long={this.longitude};from={dt};to={dt}`;
+            const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat={node.lat};long={node.long};from={dt};to={dt}`;
             http.get(url, (res) => {
                 const { statusCode } = res;
                 if (statusCode !== 200) {
