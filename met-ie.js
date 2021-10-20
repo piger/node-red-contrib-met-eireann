@@ -10,16 +10,19 @@ module.exports = function(RED) {
 
         var node = this;
 
-        node.on('input', function(msg) {
+        node.on('input', function(msg, send, done) {
             const now = DateTime.now().startOf("second");
             const dt = now.toISO({ suppressMilliseconds: true, suppressSeconds: true, includeOffset: false });
             const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat={node.lat};long={node.long};from={dt};to={dt}`;
+            let err;
+
             http.get(url, (res) => {
                 const { statusCode } = res;
                 if (statusCode !== 200) {
                     let error = new Error(`Request failed: ${statusCode}`);
                     console.error(error.message);
                     res.resume();
+                    done(error);
                     return;
                 }
 
@@ -50,12 +53,14 @@ module.exports = function(RED) {
                         });
                     } catch (e) {
                         console.error(e.message);
+                        done(e);
                     }
 
-                    node.send(r);
+                    send(r);
                 });
             }).on("error", (e) => {
                 console.error(`Got error: ${e.message}`);
+                done(e);
             });
 
             // msg.payload = "HELLO WORLD";
