@@ -1,12 +1,16 @@
 {
   "name": "node-red-contrib-met-eireann",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Node-RED plugin for met.ie",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Daniel Kertesz <daniel@spatof.org>",
+  "author": {
+    "name": "Daniel Kertesz",
+    "email": "daniel@spatof.org",
+    "url": "http://nodered.org"
+  },
   "license": "ISC",
   "node-red": {
     "nodes": {
@@ -20,5 +24,10 @@
   "dependencies": {
     "luxon": "^2.0.2",
     "xml2js": "^0.4.23"
-  }
+  },
+  "keywords": [
+    "node-red",
+    "weather",
+    "ireland"
+  ]
 }
