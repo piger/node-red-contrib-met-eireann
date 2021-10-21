@@ -30,8 +30,13 @@ module.exports = function (RED) {
 
                     res.on("data", (chunk) => { rawData += chunk; });
                     res.on("end", () => {
+                        let opts = {
+                            valueProcessors: [ xml2js.processors.parseNumbers ],
+                            attrValueProcessors: [ xml2js.processors.parseNumbers ]
+                        }
+
                         try {
-                            xml2js.parseString(rawData, function (err, result) {
+                            xml2js.parseString(rawData, opts, function (err, result) {
                                 if (err) {
                                     error = err;
                                 } else {
@@ -39,18 +44,18 @@ module.exports = function (RED) {
                                     let rainCurrent = result.weatherdata.product[0].time[1].location[0];
 
                                     msg.payload = {
-                                        temperature: parseFloat(current.temperature[0].$.value),
-                                        windDirection: current.windDirection[0].$.name,
-                                        windDirectionDeg: parseFloat(current.windDirection[0].$.deg),
-                                        windSpeed: parseFloat(current.windSpeed[0].$.mps),
-                                        humidity: parseFloat(current.humidity[0].$.value),
-                                        pressure: parseFloat(current.pressure[0].$.value),
-                                        cloudiness: parseFloat(current.cloudiness[0].$.percent),
-                                        lowClouds: parseFloat(current.lowClouds[0].$.percent),
-                                        highClouds: parseFloat(current.highClouds[0].$.percent),
-                                        dewPoint: parseFloat(current.dewpointTemperature[0].$.value),
-                                        rain: parseFloat(rainCurrent.precipitation[0].$.value),
-                                        rainProbability: parseFloat(rainCurrent.precipitation[0].$.probability)
+                                        temperature: current.temperature[0].$['value'],
+                                        windDirection: current.windDirection[0].$['name'],
+                                        windDirectionDeg: current.windDirection[0].$['deg'],
+                                        windSpeed: current.windSpeed[0].$['mps'],
+                                        humidity: current.humidity[0].$['value'],
+                                        pressure: current.pressure[0].$['value'],
+                                        cloudiness: current.cloudiness[0].$['percent'],
+                                        lowClouds: current.lowClouds[0].$['percent'],
+                                        highClouds: current.highClouds[0].$['percent'],
+                                        dewPoint: current.dewpointTemperature[0].$['value'],
+                                        rain: rainCurrent.precipitation[0].$['value'],
+                                        rainProbability: rainCurrent.precipitation[0].$['probability']
                                     };
                                 }
                             });
