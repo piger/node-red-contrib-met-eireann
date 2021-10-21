@@ -48,6 +48,7 @@ module.exports = function (RED) {
                                         windDirection: current.windDirection[0].$['name'],
                                         windDirectionDeg: current.windDirection[0].$['deg'],
                                         windSpeed: current.windSpeed[0].$['mps'],
+                                        globalRadiation: current.globalRadiation[0].$['value'],
                                         humidity: current.humidity[0].$['value'],
                                         pressure: current.pressure[0].$['value'],
                                         cloudiness: current.cloudiness[0].$['percent'],
