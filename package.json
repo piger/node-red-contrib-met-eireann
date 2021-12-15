@@ -29,9 +29,5 @@
     "node-red",
     "weather",
     "ireland"
-  ],
-  "bundledDependencies": [
-    "luxon",
-    "xml2js"
   ]
 }
