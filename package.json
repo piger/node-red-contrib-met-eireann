@@ -7,6 +7,10 @@
     "email": "daniel@spatof.org",
     "url": "http://nodered.org"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/piger/node-red-contrib-met-eireann.git"
+  },
   "license": "Apache-2.0",
   "node-red": {
     "nodes": {
