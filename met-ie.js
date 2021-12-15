@@ -15,15 +15,21 @@ module.exports = function (RED) {
         RED.nodes.createNode(this, config);
         this.lat = config.lat;
         this.long = config.long;
-
-        var node = this;
+        const node = this;
 
         node.on('input', function (msg, send, done) {
-            node.status({ fill: "blue", shape: "dot", text: "weather.status.requesting" });
+            node.status({
+                fill: "blue",
+                shape: "dot",
+                text: "weather.status.requesting"
+            });
 
-            const now = DateTime.now().startOf('hour').toISO({ suppressMilliseconds: true, suppressSeconds: true, includeOffset: false });
+            const now = DateTime.now().startOf('hour').toISO({
+                suppressMilliseconds: true,
+                suppressSeconds: true,
+                includeOffset: false
+            });
             const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat=${node.lat};long=${node.long};from=${now};to=${now}`;
-            // this.log(`url: ${url}`);
 
             http.get(url, (res) => {
                 const { statusCode } = res;
