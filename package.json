@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-met-eireann",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A Node-RED node that gets the weather report from met.ie",
   "author": {
     "name": "Daniel Kertesz",
