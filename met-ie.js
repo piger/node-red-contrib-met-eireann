@@ -1,4 +1,8 @@
+/* metEireannForecastNode - the main node in this package. */
+
 module.exports = function (RED) {
+    'use strict';
+
     const http = require("http");
     const xml2js = require("xml2js");
     const { DateTime } = require("luxon");
