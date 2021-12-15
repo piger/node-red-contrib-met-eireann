@@ -7,7 +7,11 @@ module.exports = function (RED) {
     const xml2js = require("xml2js");
     const { DateTime } = require("luxon");
 
-    function MetIe(config) {
+    /**
+     * 
+     * @param {*} config - configuration for this node.
+     */
+    function metEireannForecastNode(config) {
         RED.nodes.createNode(this, config);
         this.lat = config.lat;
         this.long = config.long;
@@ -86,7 +90,7 @@ module.exports = function (RED) {
 
             node.status({});
         }); // end node('on')
-    } // end MetIe
+    } // end metEireannForecastNode
 
-    RED.nodes.registerType("met-ie", MetIe);
+    RED.nodes.registerType("met-ie", metEireannForecastNode);
 }
