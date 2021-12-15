@@ -18,6 +18,10 @@ module.exports = function (RED) {
         const node = this;
 
         node.on('input', function (msg, send, done) {
+            // compatibility with Node-RED 0.x
+            send = send || function(...args) { node.send.apply(node, args) };
+            done = done || function(text, msg) { if (text) { node.error(text, msg); } };
+
             node.status({
                 fill: "blue",
                 shape: "dot",
