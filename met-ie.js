@@ -25,7 +25,7 @@ module.exports = function (RED) {
             node.status({
                 fill: "blue",
                 shape: "dot",
-                text: "weather.status.requesting"
+                text: "requesting"
             });
 
             const now = DateTime.now().startOf('hour').toISO({
@@ -34,22 +34,19 @@ module.exports = function (RED) {
                 includeOffset: false
             });
             const url = `http://metwdb-openaccess.ichec.ie/metno-wdb2ts/locationforecast?lat=${node.lat};long=${node.long};from=${now};to=${now}`;
+            let error;
 
             http.get(url, (res) => {
                 const { statusCode } = res;
 
                 if (statusCode !== 200) {
-                    let error = new Error(`Request failed: ${statusCode}`);
-                    node.error(error.message);
+                    error = new Error(`Request failed: ${statusCode}`);
                     res.resume();
-                    done(error);
                     return;
                 }
                 
                 res.setEncoding("utf8");
                 let rawData = "";
-                let error;
-
                 res.on("data", (chunk) => { rawData += chunk; });
 
                 res.on("end", () => {
@@ -87,23 +84,28 @@ module.exports = function (RED) {
                             
                         });
                     } catch (e) {
-                        node.error(e.message);
                         error = e;
-                    }
-
-                    if (error) {
-                        done(error);
-                    } else {
-                        send(msg);
                     }
                 });
 
             }).on("error", (e) => {
-                console.error(`Got error: ${e.message}`);
-                done(e);
+                error = e;
             });
 
-            node.status({});
+            if (error) {
+                node.error(error.message);
+                node.status({
+                    fill: "red",
+                    shape: "ring",
+                    text: "error"
+                });
+                done(error);
+            } else {
+                send(msg);
+                node.status({});
+                done();
+            }
+
         }); // end node('on')
     } // end metEireannForecastNode
 
