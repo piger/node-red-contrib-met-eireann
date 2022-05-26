@@ -17,10 +17,6 @@
       "met-ie": "met-ie.js"
     }
   },
-  "devDependencies": {
-    "node-red": "^2.2.2",
-    "node-red-node-test-helper": "^0.2.7"
-  },
   "dependencies": {
     "luxon": "^2.0.2",
     "xml2js": "^0.4.23"
